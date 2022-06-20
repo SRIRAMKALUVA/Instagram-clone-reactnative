@@ -1,9 +1,17 @@
 import { View, Text, Image, StyleSheet } from "react-native";
 import React from "react";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import firebase from "firebase";
 import { TouchableOpacity } from "react-native";
 
 const Header = ({ navigation }) => {
+  const handleSignOut = async () => {
+    try {
+      await firebase.auth().signOut();
+      console.log("signed out");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <View style={styles.container}>
       <TouchableOpacity>
@@ -20,10 +28,10 @@ const Header = ({ navigation }) => {
             source={require("../../assets/add.png")}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleSignOut}>
           <Image
             style={styles.mainIcons}
-            source={require("../../assets/heart.png")}
+            source={require("../../assets/logout.png")}
           />
         </TouchableOpacity>
         <TouchableOpacity>

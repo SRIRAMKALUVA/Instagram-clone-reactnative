@@ -1,10 +1,10 @@
 import React from "react";
 import "react-native-gesture-handler";
 import { StyleSheet, Text, View } from "react-native";
-import SignedInStack from "./screens/Navigation";
+import AuthNavigation from "./AuthNavigation";
 
 export default function App() {
-  return <SignedInStack />;
+  return <AuthNavigation />;
 }
 
 const styles = StyleSheet.create({

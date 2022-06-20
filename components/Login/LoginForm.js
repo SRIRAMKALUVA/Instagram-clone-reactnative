@@ -10,8 +10,7 @@ import {
 import React, { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import firebase from "../../firebase";
-import validator from "email-validator";
+import { firebase } from "../../firebase";
 
 const LoginForm = ({ navigation }) => {
   const LoginFormSchema = Yup.object().shape({
@@ -29,7 +28,6 @@ const LoginForm = ({ navigation }) => {
   const onLogin = async (email, password) => {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
-      navigation.push("HomeScreen");
       console.log("success");
     } catch (error) {
       Alert.alert(error.message);
@@ -52,17 +50,17 @@ const LoginForm = ({ navigation }) => {
           values,
           errors,
           isValid,
-          touched
+          touched,
         }) => (
           <>
-              {errors.email &&  touched.email && (
-                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                  {errors.email}
-                </Text>
-              )}
+            {errors.email && touched.email && (
+              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                {errors.email}
+              </Text>
+            )}
             <View style={styles.loginFields}>
               <TextInput
-                name = "email"
+                name="email"
                 placeholder="Email/メール"
                 placeholderTextColor="#c7c7c7"
                 autoCapitalize="none"
@@ -74,14 +72,14 @@ const LoginForm = ({ navigation }) => {
                 value={values.email}
               />
             </View>
-              {errors.password && touched.password && (
-                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                  {errors.password}
-                </Text>
-              )}
+            {errors.password && touched.password && (
+              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                {errors.password}
+              </Text>
+            )}
             <View style={styles.loginFields}>
               <TextInput
-              name = "password"
+                name="password"
                 placeholder="Password/パスワード"
                 placeholderTextColor="#c7c7c7"
                 autoCapitalize="none"

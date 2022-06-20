@@ -1,9 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import React from "react";
-import { useScrollToTop } from "@react-navigation/native";
 
 const Footer = ({ navigation }) => {
-  const ref = React.useRef(null);
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => navigation.push("HomeScreen")}>
@@ -27,7 +25,7 @@ const Footer = ({ navigation }) => {
       <TouchableOpacity>
         <Image
           style={styles.mainIcons}
-          source={require("../../assets/bag.png")}
+          source={require("../../assets/heart.png")}
         />
       </TouchableOpacity>
       <TouchableOpacity>

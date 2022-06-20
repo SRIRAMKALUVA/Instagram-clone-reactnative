@@ -9,10 +9,15 @@ import {
 import React, { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import firebase from "../../firebase";
+import { firebase, db } from "../../firebase";
 
 const Signupform = ({ navigation }) => {
   const [pass, setPass] = useState("");
+  const getRandomProfilePicture = async () => {
+    const response = await fetch("https://randomuser.me/api");
+    const data = await response.json();
+    return data.results[0].picture.large;
+  };
   const SignUpFormSchema = Yup.object().shape({
     username: Yup.string().required(
       "A username is required・ユーザーネームが必要です。"
@@ -40,9 +45,19 @@ const Signupform = ({ navigation }) => {
       ),
   });
 
-  const onSignup = async (email, password) => {
+  const onSignup = async (email, password, username, phoneNumber) => {
     try {
-      await firebase.auth().createUserWithEmailAndPassword(email, password);
+      const authUser = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
+
+      db.collection("users").add({
+        owner_uid: authUser.user.uid,
+        username: username,
+        email: authUser.user.email,
+        phoneNumber: phoneNumber,
+        profile_picture: await getRandomProfilePicture(),
+      });
       navigation.push("LoginScreen");
       console.log("success");
     } catch (error) {
@@ -59,7 +74,12 @@ const Signupform = ({ navigation }) => {
           username: "",
         }}
         onSubmit={(values) => {
-          onSignup(values.email, values.password);
+          onSignup(
+            values.email,
+            values.password,
+            values.username,
+            values.phoneNumber
+          );
         }}
         validationSchema={SignUpFormSchema}
         validateOnMount={true}
@@ -74,11 +94,11 @@ const Signupform = ({ navigation }) => {
           touched,
         }) => (
           <>
-              {errors.username && touched.username && (
-                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                  {errors.username}
-                </Text>
-              )}
+            {errors.username && touched.username && (
+              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                {errors.username}
+              </Text>
+            )}
             <View style={styles.loginFields}>
               <TextInput
                 style={{ padding: 10 }}
@@ -92,11 +112,11 @@ const Signupform = ({ navigation }) => {
                 value={values.username}
               />
             </View>
-              {errors.email && touched.email && (
-                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                  {errors.email}
-                </Text>
-              )}
+            {errors.email && touched.email && (
+              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                {errors.email}
+              </Text>
+            )}
             <View style={styles.loginFields}>
               <TextInput
                 style={{ padding: 10 }}
@@ -110,11 +130,11 @@ const Signupform = ({ navigation }) => {
                 value={values.email}
               />
             </View>
-              {errors.phoneNumber && touched.phoneNumber && (
-                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                  {errors.phoneNumber}
-                </Text>
-              )}
+            {errors.phoneNumber && touched.phoneNumber && (
+              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                {errors.phoneNumber}
+              </Text>
+            )}
             <View style={styles.loginFields}>
               <TextInput
                 style={{ padding: 10 }}
@@ -128,11 +148,11 @@ const Signupform = ({ navigation }) => {
                 value={values.phoneNumber}
               />
             </View>
-              {errors.password && touched.password && (
-                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                  {errors.password}
-                </Text>
-              )}
+            {errors.password && touched.password && (
+              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                {errors.password}
+              </Text>
+            )}
             <View style={styles.loginFields}>
               <TextInput
                 onChange={(e) => setPass(e.nativeEvent.text)}
@@ -148,11 +168,11 @@ const Signupform = ({ navigation }) => {
                 value={values.password}
               />
             </View>
-              {errors.reEnterPassword && touched.reEnterPassword && (
-                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                  {errors.reEnterPassword}
-                </Text>
-              )}
+            {errors.reEnterPassword && touched.reEnterPassword && (
+              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                {errors.reEnterPassword}
+              </Text>
+            )}
             <View style={styles.loginFields}>
               <TextInput
                 style={{ padding: 10 }}
