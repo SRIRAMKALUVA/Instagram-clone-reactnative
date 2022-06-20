@@ -52,10 +52,17 @@ const LoginForm = ({ navigation }) => {
           values,
           errors,
           isValid,
+          touched
         }) => (
           <>
+              {errors.email &&  touched.email && (
+                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                  {errors.email}
+                </Text>
+              )}
             <View style={styles.loginFields}>
               <TextInput
+                name = "email"
                 placeholder="Email/メール"
                 placeholderTextColor="#c7c7c7"
                 autoCapitalize="none"
@@ -67,13 +74,14 @@ const LoginForm = ({ navigation }) => {
                 value={values.email}
               />
             </View>
-            {errors.email && (
-              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                {errors.email}
-              </Text>
-            )}
+              {errors.password && touched.password && (
+                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                  {errors.password}
+                </Text>
+              )}
             <View style={styles.loginFields}>
               <TextInput
+              name = "password"
                 placeholder="Password/パスワード"
                 placeholderTextColor="#c7c7c7"
                 autoCapitalize="none"
@@ -85,11 +93,6 @@ const LoginForm = ({ navigation }) => {
                 value={values.password}
               />
             </View>
-            {errors.password && (
-              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                {errors.password}
-              </Text>
-            )}
             <View style={{ alignItems: "flex-end", marginBottom: 30 }}>
               <TouchableOpacity>
                 <Text style={{ color: "#6BB0F5" }}>Forgot Password?</Text>

@@ -71,8 +71,14 @@ const Signupform = ({ navigation }) => {
           values,
           errors,
           isValid,
+          touched,
         }) => (
           <>
+              {errors.username && touched.username && (
+                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                  {errors.username}
+                </Text>
+              )}
             <View style={styles.loginFields}>
               <TextInput
                 style={{ padding: 10 }}
@@ -86,11 +92,11 @@ const Signupform = ({ navigation }) => {
                 value={values.username}
               />
             </View>
-            {errors.username && (
-              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                {errors.username}
-              </Text>
-            )}
+              {errors.email && touched.email && (
+                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                  {errors.email}
+                </Text>
+              )}
             <View style={styles.loginFields}>
               <TextInput
                 style={{ padding: 10 }}
@@ -104,11 +110,11 @@ const Signupform = ({ navigation }) => {
                 value={values.email}
               />
             </View>
-            {errors.email && (
-              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                {errors.email}
-              </Text>
-            )}
+              {errors.phoneNumber && touched.phoneNumber && (
+                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                  {errors.phoneNumber}
+                </Text>
+              )}
             <View style={styles.loginFields}>
               <TextInput
                 style={{ padding: 10 }}
@@ -122,11 +128,11 @@ const Signupform = ({ navigation }) => {
                 value={values.phoneNumber}
               />
             </View>
-            {errors.phoneNumber && (
-              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                {errors.phoneNumber}
-              </Text>
-            )}
+              {errors.password && touched.password && (
+                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                  {errors.password}
+                </Text>
+              )}
             <View style={styles.loginFields}>
               <TextInput
                 onChange={(e) => setPass(e.nativeEvent.text)}
@@ -142,11 +148,11 @@ const Signupform = ({ navigation }) => {
                 value={values.password}
               />
             </View>
-            {errors.password && (
-              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                {errors.password}
-              </Text>
-            )}
+              {errors.reEnterPassword && touched.reEnterPassword && (
+                <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
+                  {errors.reEnterPassword}
+                </Text>
+              )}
             <View style={styles.loginFields}>
               <TextInput
                 style={{ padding: 10 }}
@@ -161,11 +167,6 @@ const Signupform = ({ navigation }) => {
                 value={values.reEnterPassword}
               />
             </View>
-            {errors.reEnterPassword && (
-              <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
-                {errors.reEnterPassword}
-              </Text>
-            )}
             <View>
               <Pressable
                 titleSize={20}

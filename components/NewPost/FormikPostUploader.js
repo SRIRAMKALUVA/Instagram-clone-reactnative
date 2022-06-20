@@ -33,6 +33,7 @@ const FormikPostUploader = ({ navigation }) => {
           values,
           errors,
           isValid,
+          touched
         }) => (
           <>
             <View
@@ -93,7 +94,7 @@ const FormikPostUploader = ({ navigation }) => {
               onBlur={handleBlur("imageUrl")}
               value={values.imageUrl}
             />
-            {errors.imageUrl && (
+            {errors.imageUrl && touched.imageUrl && (
               <Text style={{ fontSize: 12, color: "red", marginLeft: 20 }}>
                 {errors.imageUrl}
               </Text>
